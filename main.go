@@ -14,10 +14,11 @@ import (
 )
 
 func main() {
-	var bundle, instDir string
+	var bundle, instDir, appName string
 
 	flag.StringVar(&bundle, "bundle", "", "Path to the update package")
 	flag.StringVar(&instDir, "inst-dir", "", "Path to the application install dir")
+	flag.StringVar(&instDir, "app-name", "", "Name of the app")
 	flag.Parse()
 
 	cwd, _ := os.Getwd()
@@ -28,8 +29,6 @@ func main() {
 	defer logfile.Close()
 
 	logger := log.New(logfile, "", log.LstdFlags)
-
-	appName := "my_app"
 
 	var appExecName string
 	switch runtime.GOOS {
