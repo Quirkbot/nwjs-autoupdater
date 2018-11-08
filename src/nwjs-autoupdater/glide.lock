@@ -1,0 +1,10 @@
+hash: 089db5d58dcce28444163bee5aa2289bca80bae995ed56bbef7333582cd58fb9
+updated: 2017-06-14T18:40:00.127652081+03:00
+imports:
+- name: github.com/ivaxer/go-xattr
+  version: d205d0a1b9316c5abcfc61b261d5312301b33e4d
+- name: github.com/skratchdot/open-golang
+  version: 75fb7ed4208cf72d323d7d02fd1a5964a7a9073c
+  subpackages:
+  - open
+testImports: []
