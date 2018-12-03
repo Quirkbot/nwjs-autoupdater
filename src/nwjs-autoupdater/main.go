@@ -26,9 +26,14 @@ func main() {
 	defer logfile.Close()
 
 	logger := log.New(logfile, "", log.LstdFlags)
+	logger.Print("Start")
+	logger.Print(bundle)
+	logger.Print(instDir)
+	logger.Print(appName)
 
 	var appExec string;
 	err, appExec = updater.Update(bundle, instDir, appName)
+	logger.Print("Finish")
 	if err != nil {
 		logger.Fatal(err)
 	}
