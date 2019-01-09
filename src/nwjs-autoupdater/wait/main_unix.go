@@ -1,3 +1,5 @@
+// +build linux darwin
+
 package wait
 
 import (
@@ -14,11 +16,10 @@ func Waitpid(pid int, logger *log.Logger) {
 		if err != nil {
 			/*
 			Unix systems never return an error even if process doesn't
-			exist. So if it gets an error, it's because it's on Windows
-			and haven't found the process. In this case, consider exited.
+			exist. So if it gets an error, it's because something else went
+			wrong.
 			*/
 			logger.Fatal(err)
-			exited = true
 		} else {
 			/*
 			Trying to send a `0` signal to the process won't send any
@@ -28,18 +29,13 @@ func Waitpid(pid int, logger *log.Logger) {
 			logger.Print("Sent signal to process: ", err)
 			/*
 			If there are no errors the process is still running.
-			Otherwise it might be already finished, never started or
+			Otherwise it might be already finished/never started or
 			the belongs to other owner.
 			*/
 			if err != nil {
 				if err.Error() == "os: process already finished" {
 					exited = true
 				}
-				if err.Error() == "operation not permitted" {
-					exited = false
-				}
-			} else {
-				exited = false
 			}
 		}
 		if !exited {
