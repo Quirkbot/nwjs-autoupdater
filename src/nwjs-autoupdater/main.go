@@ -13,12 +13,12 @@ import (
 
 func main() {
 	var bundle, instDir, appName string
-	var pid int
+	var processId int
 
 	flag.StringVar(&bundle, "bundle", "", "Path to the update package")
 	flag.StringVar(&instDir, "inst-dir", "", "Path to the application install dir")
 	flag.StringVar(&appName, "app-name", "my_app", "Application executable name")
-	flag.IntVar(&pid, "waitpid", -1, "Pid of running application that must exit before updater starts")
+	flag.IntVar(&processId, "wait", -1, "PID that must exit before updater starts. Optional.")
 	flag.Parse()
 
 	cwd, _ := os.Getwd()
@@ -33,12 +33,10 @@ func main() {
 	logger.Print("bundle: ", bundle)
 	logger.Print("instDir: ", instDir)
 	logger.Print("appName: ", appName)
-	logger.Print("waitpid: ", pid)
 
-
-	if pid != -1 {
-		logger.Print("Waiting process to exit")
-		wait.Waitpid(pid, logger)
+	if processId != -1 {
+		logger.Print("Waiting process to exit", processId)
+		wait.WaitProcess(processId, logger)
 	}
 
 	var appExec string;
