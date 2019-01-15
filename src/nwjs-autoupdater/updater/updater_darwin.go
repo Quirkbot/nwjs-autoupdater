@@ -23,6 +23,7 @@ func Update(bundle, instDir, appName string) (error, string) {
 
 	err = unzip.Unzip(bundle, tempDir)
 	if err != nil {
+		os.Remove(bundle)
 		return err, appExec
 	}
 
