@@ -11,8 +11,8 @@ func Update(bundle, instDir, appName string) (error, string) {
 	appExec := filepath.Join(instDir, appExecName)
 
 	err := unzip.Unzip(bundle, instDir)
+	os.Remove(bundle)
 	if err != nil {
-		os.Remove(bundle)
 		return err, appExec
 	}
 
