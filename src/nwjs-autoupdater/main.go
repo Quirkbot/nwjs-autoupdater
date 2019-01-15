@@ -40,10 +40,10 @@ func main() {
 	}
 
 	err, appExec := updater.Update(bundle, instDir, appName)
-	logger.Print("Finish")
 	if err != nil {
-		logger.Fatal(err)
+		logger.Print("Updater error: ", 	err)
 	}
+	logger.Print("Finish")
 
 	open.Start(appExec)
 }
