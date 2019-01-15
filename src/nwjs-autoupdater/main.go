@@ -35,7 +35,7 @@ func main() {
 	logger.Print("appName: ", appName)
 
 	if processId != -1 {
-		logger.Print("Waiting process to exit", processId)
+		logger.Print("Waiting process to exit: ", processId)
 		wait.WaitProcess(processId, logger)
 	}
 

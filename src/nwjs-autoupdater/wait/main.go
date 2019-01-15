@@ -9,9 +9,11 @@ import (
 func WaitProcess(processId int, logger *log.Logger) {
 	running := true
 	tries := 0
+	var msg string
 	for running && tries < 60 {
-		running = isrunning.IsRunning(processId, logger)
-		logger.Printf("process %s still running: %d\n", processId, running)
+		running, msg = isrunning.IsRunning(processId)
+		logger.Print("Running: ", running)
+		logger.Print("Message: ", msg)
 		if running {
 			time.Sleep(1000 * time.Millisecond)
 			tries += 1
