@@ -34,3 +34,4 @@ _testmain.go
 
 # external packages folder
 vendor/
+src/github.com
