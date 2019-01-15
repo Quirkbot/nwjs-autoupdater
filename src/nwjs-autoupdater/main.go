@@ -39,8 +39,7 @@ func main() {
 		wait.WaitProcess(processId, logger)
 	}
 
-	var appExec string;
-	err, appExec = updater.Update(bundle, instDir, appName)
+	err, appExec := updater.Update(bundle, instDir, appName)
 	logger.Print("Finish")
 	if err != nil {
 		logger.Fatal(err)
