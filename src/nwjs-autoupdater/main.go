@@ -35,16 +35,15 @@ func main() {
 	logger.Print("appName: ", appName)
 
 	if processId != -1 {
-		logger.Print("Waiting process to exit", processId)
+		logger.Print("Waiting process to exit: ", processId)
 		wait.WaitProcess(processId, logger)
 	}
 
-	var appExec string;
-	err, appExec = updater.Update(bundle, instDir, appName)
-	logger.Print("Finish")
+	err, appExec := updater.Update(bundle, instDir, appName)
 	if err != nil {
-		logger.Fatal(err)
+		logger.Print("Updater error: ", 	err)
 	}
+	logger.Print("Finish")
 
 	open.Start(appExec)
 }

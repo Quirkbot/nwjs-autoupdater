@@ -4,13 +4,12 @@ package isrunning
 
 import (
 	"os/exec"
-	"log"
 	"strconv"
 	"fmt"
 	"syscall"
 )
 
-func IsRunning(pid int, logger *log.Logger) bool {
+func IsRunning(pid int) (bool, string) {
 	// Convert interger pid to string
 	processId := strconv.Itoa(pid)
 	// Create a query for tasklist
@@ -23,15 +22,16 @@ func IsRunning(pid int, logger *log.Logger) bool {
 	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	// Get command output
 	cmdOutput, err := cmd.Output()
-	logger.Print("find process:", pid)
-	logger.Print(string(cmdOutput))
-	logger.Print("error: ", err)
+	// If the command returned with error, assume the process is still running
+	if err != nil {
+		return true, err.Error()
+	}
 	// Read 4 first bytes as string
 	result := string(cmdOutput[:4])
 	// If tasklist returns with an "INFO" message it's because no process is
 	// running with that pid
 	if result == "INFO" {
-		return false
+		return false, string(cmdOutput)
 	}
-	return true
+	return true, string(cmdOutput)
 }

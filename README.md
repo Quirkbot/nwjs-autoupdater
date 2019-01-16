@@ -1,6 +1,6 @@
 *Tiny golang app, which can be bundled with your NWJS application (actually, any application) and used for "autoupdates." I really hope that we will have something like this out-of-the box in NWJS!*
 
-### Problem 
+### Problem
 
 NWJS is amazing platform for building desktop applications using web technologies. However, it is missing one important feature - an ability to seamlessly deliver updates for users.
 There were several attempts to solve this problem. For example - https://github.com/edjafarov/node-webkit-updater. But it does have issues when updater itself needs to be updated or NWJS platform needs to be updated (https://github.com/nwjs/nw.js/issues/233).  
@@ -12,18 +12,19 @@ To update target application updater needs to know two things - where zip archiv
 
 ### Build
 
-1) You need to have `golang` installed and properely configured ;)  
-2) Install `glide` https://github.com/Masterminds/glide#install  
-3) Install rsrc `go get github.com/akavel/rsrc`  
-4) Clone this repo  
-5) Go to src/nwjs-autoupdater and edit `nwjs-autoupdater.exe.manifest` as you like. WARNING: don't touch the `requestedExecutionLevel` value.  
-6) Execute `rsrc -manifest nwjs-autoupdater.exe.manifest -ico <path to your icon> -o nwjs-autoupdater.syso` to generate a .syso file with specified resources embedded and to make it WORK ON WINDOWS.
-7) Execute `glide install` to install dependencies  
-8) Go back to the root folder and run `GOPATH=$(pwd) go build nwjs-autoupdater` to build for current platform. To build for other platforms use appropriate flags:  
+1. You need to have `golang` installed and properely configured ;)
+1. Navigate to the root of this repository and run `export GOPATH=$(pwd)`
+1. Install `glide` https://github.com/Masterminds/glide#install
+1. Install rsrc `go get github.com/akavel/rsrc`
+1. Clone this repo
+1. Go to src/nwjs-autoupdater and edit `nwjs-autoupdater.exe.manifest` as you like. WARNING: don't touch the `requestedExecutionLevel` value.
+1. Execute `rsrc -manifest nwjs-autoupdater.exe.manifest -ico <path to your icon> -o nwjs-autoupdater.syso` to generate a .syso file with specified resources embedded and to make it WORK ON WINDOWS.
+1. Execute `glide install` to install dependencies
+1. Go back to the root folder and run `GOPATH=$(pwd) go build nwjs-autoupdater` to build for current platform. To build for other platforms use appropriate flags:
 ```
-    GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o updater 
-    GOOS=windows GOARCH=386 go build -ldflags "-s -w -H=windowsgui" -o updater.exe
-    GOOS=windows GOARCH=amd64 go build -ldflags "-s -w -H=windowsgui" -o updater.exe
+GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -o updater
+GOOS=windows GOARCH=386 go build -ldflags "-s -w -H=windowsgui" -o updater.exe
+GOOS=windows GOARCH=amd64 go build -ldflags "-s -w -H=windowsgui" -o updater.exe
 ```
 
 > Full list of the platforms and archetectures, which is possible to cross-compile to can be found here https://github.com/golang/go/blob/master/src/go/build/syslist.go
@@ -72,6 +73,6 @@ Because it is simple and more importantly - it can be compiled from any platform
 ### Credits
 I'm not very proficient in the golang (yet) so I've used and slightly modified several packages from the go community (all credits are going to them):
 
-https://github.com/skratchdot/open-golang - Open a file, directory, or URI using the OS's default application for that object type. Optionally, you can specify an application to use.  
-https://github.com/ivaxer/go-xattr - Extended attribute support for Go #golang  
-And very simple zip unpacker (can't find the source)  
+https://github.com/skratchdot/open-golang - Open a file, directory, or URI using the OS's default application for that object type. Optionally, you can specify an application to use.
+https://github.com/ivaxer/go-xattr - Extended attribute support for Go #golang
+And very simple zip unpacker (can't find the source)
