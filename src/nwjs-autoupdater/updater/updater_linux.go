@@ -5,12 +5,10 @@ import (
 	"os"
 	"path/filepath"
 	"nwjs-autoupdater/unzip"
-
-	"github.com/ivaxer/go-xattr"
 )
 
 func Update(bundle, instDir, appName string) (error, string) {
-	appExecName := appName + ".app"
+	appExecName := appName
 	appExec := filepath.Join(instDir, appExecName)
 	appDir := appExec
 	appBak := appExec + ".bak"
@@ -48,11 +46,6 @@ func Update(bundle, instDir, appName string) (error, string) {
 	}
 
 	err = os.RemoveAll(bundle)
-	if err != nil {
-		return err, appExec
-	}
-
-	err = xattr.Remove(appExec, "com.apple.quarantine")
 	if err != nil {
 		return err, appExec
 	}
